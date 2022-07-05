@@ -14,7 +14,6 @@
     const myStorage = window.localStorage;
     const [currentUsername, setCurrentUsername] = useState(myStorage.getItem("user"));
     const [pins, setPins] = useState([]);
-    // const [cards,setCard] = useState([]);
     const [currentPlaceId, setCurrentPlaceId] = useState(null);
     const [newPlace, setNewPlace] = useState(null);
     const [title, setTitle] = useState(null);
@@ -29,7 +28,6 @@
     });
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
-    // const [confirm, setConfirm] = useState(false);
 
 
     const handleMarkerClick = (id, lat, long) => {
@@ -96,16 +94,6 @@
       myStorage.removeItem("user");
     };
 
-    //   const handleDelete = async (id) => {
-    //     try {
-    //       const allPins = await axios.get("/pins" + id);
-    //       setPins(allPins.data);
-    //     } catch (err) {
-    //       console.log(err);
-    //     }
-    //   };
-    //   getPins();
-    // }
     async function handleDelete(id){
       console.log(id)
       try{
@@ -119,20 +107,12 @@
     
     return (
       <div style={{ height: "100vh", width: "100%" }}>
-        {/* {confirm}  */}
-        {/* <div className="confirmDelete">Are you sure you want to delete
-          <button onClick={handleDelete()}>Yes</button>
-          <button onClick={setConfirm(false)}>No</button>
-        </div>:<></> */}
-
         <ReactMapGL
           {...viewport}
           mapboxApiAccessToken="pk.eyJ1IjoibG9sbG1hbyIsImEiOiJjbDRwcTZwYjYwMmcxM2l0M2JqYmt0bWRvIn0.LHTKFmQ6bpGHQTlRTGYeTQ"
           width="100%"
           height="100%"
           transitionDuration="200"
-          // mapStyle="mapbox://styles/lollmao/cl4tu0nk5002116prpdq27uzd"
-          // mapStyle="mapbox://styles/lollmao/cl4tta7p5003814lp7tpvdhkv"
           onViewportChange={(viewport) => setViewport(viewport)}
           onDblClick={currentUsername && handleAddClick}
         >
@@ -168,7 +148,6 @@
                 >
                   <button className="deletebutton" onClick={() => handleDelete(p._id) }><DeleteForeverIcon fontSize="small"/></button>
                   
-                  {/* <>{p._id}</> */}
                   <div className="card">
                     <label>Place</label>
                     <h4 className="place">{p.title}</h4>
