@@ -14,18 +14,14 @@ router.post("/", async (req, res) => {
   }
 });
 
-//get all pins
 router.get("/", async (req, res) => {
   try {
-    // const pins = await Pin.find({ "_id": "62b5f2adba1df848bc720df3" });    
-
     const pins = await Pin.find();
     res.status(200).json(pins);
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
 
 router.get("/:type", async (req, res) => {
   try {
@@ -36,17 +32,30 @@ router.get("/:type", async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.get("/delete/:id", async (req, res) => {
-  // console.log(id)
-  try {
 
-    const del = await Pin.deleteOne({ "_id": req.params.id });
-    console.log(del);
-    const pins = await Pin.find();    
-    // const pins = await Pin.find();    
+router.get("/delete/:id", async (req, res) => {
+  // console.log(req.query.user);
+  // console.log(req.params.id);
+  try{
+  const findthis = await Pin.find({ _id: req.params.id, username: req.query.user });
+  console.log(findthis);
+  if(findthis.length > 0){
+    await Pin.deleteOne({ _id: req.params.id, username: req.query.user });
+    const pins = await Pin.find();
     res.status(200).json(pins);
-  } catch (err) {
+  }else { 
+    res.status(400).json("Login to delete");
+  }
+} catch {
     res.status(500).json(err);
   }
+  // try {
+  //   const del = await Pin.deleteOne({ "_id": req.params.id });
+  //   console.log(del);
+  //   const pins = await Pin.find();       
+  //   res.status(200).json(pins);
+  // } catch (err) {
+  //   res.status(500).json(err);
+  // }
 });
 module.exports = router;

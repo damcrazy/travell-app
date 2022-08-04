@@ -6,7 +6,6 @@
   import { format } from "timeago.js";
   import Register from "./components/Register";
   import Login from "./components/Login";
-  // import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
   import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 
@@ -18,7 +17,7 @@
     const [newPlace, setNewPlace] = useState(null);
     const [title, setTitle] = useState(null);
     const [desc, setDesc] = useState(null);
-    const [star, setStar] = useState(0);
+    const [star, setStar] = useState(1);
     const [type,setType] = useState("");
     const [typeinp, setTypeinp] = useState("");
     const [viewport, setViewport] = useState({
@@ -28,7 +27,7 @@
     });
     const [showRegister, setShowRegister] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
-
+    const [deleteState , setDeleteState] = useState(false);
 
     const handleMarkerClick = (id, lat, long) => {
       setCurrentPlaceId(id);
@@ -97,7 +96,12 @@
     async function handleDelete(id){
       console.log(id)
       try{
-        const allPins = await axios.get("/pins/delete/" + id);
+        const allPins = await axios.get("/pins/delete/" + id ,{
+          params: {
+            user : currentUsername
+          }
+        });
+        console.log(allPins.data);
         setPins(allPins.data);
         }catch (err) {
           console.log(err);
